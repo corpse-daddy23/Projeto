@@ -17,7 +17,7 @@ mostrar_ajuda() {
 }
 
 encriptar() {
-  echo "$1" | openssl enc -pbkdf2 -a -salt -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc
+  echo "$1" | openssl enc -pbkdf2 -a -salt -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc nao funciona esta encriptação
 }
 
 desencriptar() {
@@ -47,7 +47,7 @@ remover_senha() {
   sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
   echo "Senha removida com sucesso para $usuario@$servico"
 }
-
+#Ainda n está bem a funcionar
 atualizar_senha() {
   echo -n "Nome de Usuário: "
   read usuario
