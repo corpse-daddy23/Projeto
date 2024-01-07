@@ -1,10 +1,11 @@
 #!/bin/bash
 
 SENHAS_ARQUIVO="senhas.txt"
-CHAVE_MESTRA="Miguel23"
+CHAVE_MESTRA="chave_secreta"
 
+#Caso nao tenha selecionado nenhum input ele dará este menu
 mostrar_ajuda() {
-  echo "Gestor de Senhas na Linha de Comando"
+  echo "Gestor de Senhas"
   echo "Uso: $0 [OPÇÃO]"
   echo "Opções:"
   echo "  -a, --adicionar     Adicionar uma nova senha"
@@ -17,11 +18,11 @@ mostrar_ajuda() {
 }
 
 encriptar() {
-  echo "$1" | openssl enc -pbkdf2 -a -salt -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc nao funciona esta encriptação
+  echo "$1" | openssl enc -aes-256-cbc -a -salt -pbkdf2 -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc nao funciona esta encriptação -> Meti a dar
 }
 
 desencriptar() {
-  echo "$1" | openssl enc -pbkdf2 -a -d -salt -pass pass:"$CHAVE_MESTRA"
+  echo "$1" | openssl enc -aes-256-cbc -a -d -salt -pbkdf2 -pass pass:"$CHAVE_MESTRA"
 }
 
 adicionar_senha() {
@@ -47,17 +48,21 @@ remover_senha() {
   sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
   echo "Senha removida com sucesso para $usuario@$servico"
 }
-#Ainda n está bem a funcionar
-atualizar_senha() {
-  echo -n "Nome de Usuário: "
-  read usuario
-  echo -n "Serviço: "
-  read servico
+#Ainda n está bem a funcionar!!!!!!#
+#atualizar_senha() {
+#  echo -n "Nome de Usuário: "
+#  read usuario
+#  echo -n "Serviço: "
+#  read servico
 
-  senha_encriptada=$(encriptar "$(dialog --passwordbox "Nova Senha:" 10 30 3>&1 1>&2 2>&3 3>&1)")
-  sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
-  echo "$usuario:$senha_encriptada:$servico" >> "$SENHAS_ARQUIVO"
-  echo "Senha atualizada com sucesso para $usuario@$servico"
+#  senha_encriptada=$(encriptar "$(dialog --passwordbox "Nova Senha:" 10 30 3>&1 1>&2 2>&3 3>&1)")
+#  sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
+#  echo "$usuario:$senha_encriptada:$servico" >> "$SENHAS_ARQUIVO"
+#  echo "Senha atualizada com sucesso para $usuario@$servico"
+#}
+
+atualizar_senha() {
+    echo Funcionalidade em Desenvolvimento
 }
 
 listar_senhas() {
