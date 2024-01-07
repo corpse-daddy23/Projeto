@@ -1,2 +1,2 @@
 # Projeto
-Projeto de desenvolvimento de um programa sobre o ISV e o IUC
+Projeto de desenvolvimento de um programa de armazenamento de senhas encriptadas
