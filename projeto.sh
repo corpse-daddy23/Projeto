@@ -18,7 +18,7 @@ mostrar_ajuda() {
 }
 
 encriptar() {
-  echo "$1" | openssl enc -aes-256-cbc -a -salt -pbkdf2 -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc nao funciona esta encriptação -> Meti a dar
+  echo "$1" | openssl enc -aes-256-cbc -a -salt -pbkdf2 -pass pass:"$CHAVE_MESTRA"   #-aes-256-cbc nao funciona esta encriptação
 }
 
 desencriptar() {
@@ -38,7 +38,7 @@ adicionar_senha() {
   echo "$usuario:$senha_encriptada:$servico" >> "$SENHAS_ARQUIVO"
   echo "Senha adicionada com sucesso para $usuario@$servico"
 }
-
+#esta com alguns problemas, temos de resolver isto
 remover_senha() {
   echo -n "Nome de Usuário: "
   read usuario
@@ -48,7 +48,7 @@ remover_senha() {
   sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
   echo "Senha removida com sucesso para $usuario@$servico"
 }
-#Ainda n está bem a funcionar!!!!!!#
+#Ainda n está bem a funcionar
 #atualizar_senha() {
 #  echo -n "Nome de Usuário: "
 #  read usuario
