@@ -38,7 +38,6 @@ adicionar_senha() {
   echo "$usuario:$senha_encriptada:$servico" >> "$SENHAS_ARQUIVO"
   echo "Senha adicionada com sucesso para $usuario@$servico"
 }
-#esta com alguns problemas, temos de resolver isto
 remover_senha() {
   echo -n "Nome de Usuário: "
   read usuario
@@ -55,7 +54,6 @@ remover_senha() {
   fi
 }
 
-#Ainda n está bem a funcionar
 atualizar_senha() {
   echo -n "Nome de Usuário: "
   read usuario
