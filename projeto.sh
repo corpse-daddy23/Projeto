@@ -45,24 +45,37 @@ remover_senha() {
   echo -n "Serviço: "
   read servico
 
-  sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
-  echo "Senha removida com sucesso para $usuario@$servico"
+  # Verifica se a entrada existe antes de tentar remover
+  if grep -q "^$usuario:.*:$servico" "$SENHAS_ARQUIVO"; then
+    # Remove a linha do arquivo
+    sed -i "/^$usuario:.*:$servico/d" "$SENHAS_ARQUIVO"
+    echo "Senha removida com sucesso para $usuario@$servico"
+  else
+    echo "Combinação de usuário e serviço não encontrada."
+  fi
 }
+
 #Ainda n está bem a funcionar
-#atualizar_senha() {
-#  echo -n "Nome de Usuário: "
-#  read usuario
-#  echo -n "Serviço: "
-#  read servico
-
-#  senha_encriptada=$(encriptar "$(dialog --passwordbox "Nova Senha:" 10 30 3>&1 1>&2 2>&3 3>&1)")
-#  sed -i "/^$usuario:$servico/d" "$SENHAS_ARQUIVO"
-#  echo "$usuario:$senha_encriptada:$servico" >> "$SENHAS_ARQUIVO"
-#  echo "Senha atualizada com sucesso para $usuario@$servico"
-#}
-
 atualizar_senha() {
-    echo Funcionalidade em Desenvolvimento
+  echo -n "Nome de Usuário: "
+  read usuario
+  echo -n "Serviço: "
+  read servico
+
+  # Verifica se a entrada existe antes de tentar atualizar
+  if grep -q "^$usuario:.*:$servico" "$SENHAS_ARQUIVO"; then
+    echo -n "Nova Senha: "
+    read -s nova_senha
+    echo ""
+
+    senha_encriptada=$(encriptar "$nova_senha")
+
+    # Atualiza a linha no arquivo
+    sed -i "s/^$usuario:.*:$servico/$usuario:$senha_encriptada:$servico/g" "$SENHAS_ARQUIVO"
+    echo "Senha atualizada com sucesso para $usuario@$servico"
+  else
+    echo "Combinação de usuário e serviço não encontrada."
+  fi
 }
 
 listar_senhas() {
